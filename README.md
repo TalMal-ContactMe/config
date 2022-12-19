@@ -1,3 +1,3 @@
 # Contact-me - config server  
-Cloud config server for microservice environment.  
-holds and distributes environment configurations to all servers.
+Cloud config server running on Spring-Boot.
+holds and distributes environment configurations to microservice environment.  
