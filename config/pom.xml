@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>talmal.contact</groupId>
+		<artifactId>MavenParent</artifactId>
+		<version>0.0.1</version>
+		<relativePath>../MavenParent/pom.xml</relativePath> 
+	</parent>
+		
+	<artifactId>config</artifactId>
+	<name>config</name>
+	<description>spring cloud config server</description>
+	
+	<properties>
+		<docker-repository>talmal/contact-config</docker-repository>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>config</finalName>
+		
+		<plugins>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>dockerfile-maven-plugin</artifactId>
+					<version>${dockerfile-maven-version}</version>
+					<executions>
+						<execution>
+							<id>default</id>
+							<goals>
+								<goal>build</goal>
+								<goal>push</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<repository>${docker-repository}</repository>
+						<tag>${project.version}</tag>
+						<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+						<buildArgs>
+							<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+						</buildArgs>
+					</configuration>
+				</plugin>
+			</plugins>
+	</build>
+</project>
